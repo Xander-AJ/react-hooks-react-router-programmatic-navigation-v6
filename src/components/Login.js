@@ -1,25 +1,37 @@
 import { useState } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
+  const login = useOutletContext();
+  
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
-  }
+  };
 
-  function handleLogin(e) {
+  const handleLogin = (e) => {
     e.preventDefault();
-  }
+    // Mock login logic for demonstration
+    // In a real app, this would be replaced with actual authentication logic
+    if (formData.username && formData.password) {
+      login(); // Call the login function passed as context
+      navigate("/"); // Navigate to the home page after successful login
+    } else {
+      alert("Please enter username and password.");
+    }
+  };
 
   return (
     <form onSubmit={handleLogin}>
-      <label for="username">Username</label>
+      <label htmlFor="username">Username</label>
       <div>
         <input
           id="username"
@@ -29,7 +41,7 @@ function Login() {
           onChange={handleChange}
         />
       </div>
-      <label for="password">Password</label>
+      <label htmlFor="password">Password</label>
       <div>
         <input
           id="password"
